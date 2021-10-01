@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FOODS HEAVEN</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  <!-- FontAwesome CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+    integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+    integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+    crossorigin="anonymous"></script>
+</head>
+
+<body style="background-color:rgb(235, 255, 189);">
+  <nav class="navbar fixed-top navbar-light mb-5" style="background-color: hsl(197, 100%, 85%);">
+    <div class="container-fluid">
+      <a class="navbar-brand">
+        <h3 class="display-4 font-italic"><strong>FOODS HEAVEN</strong></h3>
+      </a>
+
+    </div>
+  </nav>
+  
+
+  <div class="container c" action="" method="GET" target=" _blank" style="margin-top: 3cm;"><h1 id="h1">PLACE ORDER</h1>
+    <div class="shadow-lg mb-5 bg-white" >
+      <table class="table table-hover table-borderless" >
+        <thead class="table-dark">
+          <tr>
+            <th scope="col" colspan="2">PRODUCT</th>
+            <th scope="col">QUANTITY</th>
+            <th scope="col">PRICE</th>
+          </tr>
+        </thead>
+        <tbody id="bd">
+
+        </tbody>
+
+        <tfoot>
+          <tr>
+            <th scope="row">Subtotal :</th>
+            <td colspan="3" id="total">Rs. 0</td>
+          </tr>
+          <tr>
+            <th scope="row" colspan="4">
+              
+              <button type="button" class="btn btn-primary btn-lg" onclick="location.href='index.html'">
+                BACK TO HOME PAGE
+              </button>
+              <button type="button" class="btn btn-primary btn-lg" data-bs-toggle="modal"
+                data-bs-target="#exampleModal">
+                BUY NOW
+              </button>
+              <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLabel">
+                        ORDER CONFIRMATION
+                      </h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">DO YOU WANT TO CONFIRM YOUR ORDER?</div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                      <button type="button" class="btn btn-success" data-bs-dismiss="modal" onclick="location.href='form1.html'">
+                        DONE
+                      </button>
+
+        </tfoot>
+    </div>
+  </div>
+  </div>
+  </div>
+  </th>
+  </tr>
+  </tbody>
+  </table>
+  </div>
+  </div>
+  <script>
+    cart1 = JSON.parse(sessionStorage.getItem("cart"));
+    //console.log(cart1)
+    var cart1
+    var cartdata = []
+
+    
+    var fr = []
+    for (let i = 0; i < cart1.length; i++) {
+      let count = 1;
+      for (let j = i + 1; j < cart1.length; j++) {
+        if (cart1[i].id === cart1[j].id) {
+          //count++;
+          cart1[i].quantity =cart1[i].quantity+1
+          //To avoid counting same element again    
+          fr[j] = "visited"
+          cart1[j] = "visited"
+        }
+      }
+      if (fr[i] != "visited") {
+        fr[i] = count
+        //cart1[i].quantity = count
+        cartdata.push(cart1[i])
+
+        //console.log(cart1[i].quantity)
+        //console.log(cart1)
+
+      }
+      if (fr[i] == "visited")
+        delete cart1[i]
+    }
+
+console.log(cartdata)
+    function render() {
+      var htmldata
+      for (x in cartdata) {
+        idd = cartdata[x].id
+        htmldata += `
+                    <tr id="item${cartdata[x].id}">
+                                <td scope="col" colspan="2">
+                                    <span><img src=${cartdata[x].imgurl} alt="" style="height: 120px;width: 100px; ;"></span>
+                                    <span style="position: absolute;">${cartdata[x].name}<div id="burg" data-value="60">Rs. ${cartdata[x].price}</div></span>
+                                    
+                                </td>
+                                <td>
+                                    
+                                        
+                                        <div class="quantity" >
+                                            <button type="button" class="btn bta btn-secondary" id="${x}" onclick="decrease(this)" data-item="${cartdata[x].name}"> – </button>
+                                            <span class="2" value=${cartdata[x].quantity}>${cartdata[x].quantity}</span>
+                                              <button type="button" class="btn bta btn-secondary" id="${x}"onclick="increase(this)" data-item="${cartdata[x].name}"> + </button>
+                                        </div>
+                                        <br>
+                                        <div class="remove-item">
+                                            <button class="btn btn-danger" onclick="del(this)" id='${cartdata[x].id}'>
+                                                Delete
+                                            </button>
+                                        </div>
+                                  </td>
+                                        <td>
+                                        <div id="amount">Rs. ${cartdata[x].quantity * cartdata[x].price}</div>
+                                        <br>
+                                        
+                                        </td>
+                                    
+                                
+                            </tr>`
+      }
+      $('#bd').html = ""
+      $('#bd').html(htmldata)
+      $("#total").text("Rs." + total())
+      //$('.remove-product').click(function() {
+      //removeItem(this);
+      // console.log(this.id)
+      // });
+    }
+    render();
+    function increase(i) {
+      cartdata[i.id].quantity += 1;
+      $("#P1").text(cartdata[i.id].quantity * cartdata[i.id].price);
+      render();
+
+    }
+    function decrease(i) {
+      if (cartdata[i.id].quantity > 1) {
+        cartdata[i.id].quantity = cartdata[i.id].quantity - 1;
+        render();
+      }
+
+    }
+
+    
+    function total() {
+      let total = 0
+      for (x in cartdata) {
+        total += cartdata[x].price * cartdata[x].quantity
+      }
+      return total
+    }
+    function del(i) {
+      console.log(i)
+      for (y in cartdata) {
+        if (cartdata[y].id == i.id) {
+          console.log(y)
+          cartdata.splice(y, 1);
+        }
+
+      }
+      console.log(cartdata)
+      $("#total").text("Rs." + total())
+      var id = "#item" + i.id
+      $(id).remove();
+
+    }
+
+
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj"
+    crossorigin="anonymous"></script>
+
+</body>
+
+</html>

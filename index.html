@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FOODS HEAVEN</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous" />
+    <style>
+        #card:hover {
+  
+  -webkit-transform: scale(1.1); /* Safari 3-8 */
+  transform: scale(1.); 
+}
+    </style>
+
+</head>
+
+<body style="background-color:rgb(235, 255, 189);">
+
+    <nav class="navbar fixed-top navbar-light mb-5" style="background-color: hsl(197, 100%, 85%); ">
+        <div class="container-fluid">
+            <a class="navbar-brand">
+                <h3 class="display-4 font-italic"><strong>FOODS HEAVEN</strong></h3>
+            </a>
+            <form class="d-flex">
+                <div id="cartcontents" onclick="location.href='newcart.html'" class="mx-2"><i
+                        class="fa fa-shopping-cart fa-2x" aria-hidden="true"></i></div>
+                <input id="sear" class="form-control me-2" type="search" placeholder="Search" aria-label="Search"
+                    onchange="searhbox()">
+                <button id="search" class="btn btn-outline-success" type="button" onclick="searh()">Search</button>
+
+
+            </form>
+        </div>
+    </nav>
+    <div class="container">
+        <div class="row" id="items" style="margin-top: 3cm;">
+
+
+        </div>
+        <div class="row" id="items2"></div>
+
+    </div>
+    <script>
+        var data = [
+            {
+                "id": 0,
+                "name": "Burger",
+                "price": 54,
+                "quantity": 1,
+                "imgurl":
+                    "https://www.indianhealthyrecipes.com/wp-content/uploads/2016/02/veg-burger-recipe-1-500x500.jpg",
+            },
+            {
+                "id": 1,
+                "name": "Sandwich",
+                "price": 40,
+                "quantity": 1,
+                "imgurl":
+                    "https://www.whiskaffair.com/wp-content/uploads/2020/03/mayonnaise-Sandwich-3.jpg",
+            },
+            {
+                "id": 2,
+                "name": "Pasta",
+                "price": 30,
+                "quantity": 1,
+                "imgurl":
+                    "https://imagesvc.meredithcorp.io/v3/mm/image?url=https%3A%2F%2Fimages.media-allrecipes.com%2Fuserphotos%2F8246835.jpg",
+            },
+            {
+                "id": 3,
+                "name": "Chips",
+                "price": 20,
+                "quantity": 1,
+                "imgurl": "https://www.tasteofhome.com/wp-content/uploads/2019/11/Air-Fryer-Potato-Chips_EXPS_EDAF20_227041_C03_18_7b-6.jpg?fit=700,1024"
+            },
+            {
+                "id": 4,
+                "name": "French_Fries",
+                "price": 40,
+                "quantity": 1,
+                "imgurl": "https://www.indianhealthyrecipes.com/wp-content/uploads/2021/04/french-fries-recipe.jpg"
+            },
+            {
+                "id": 5,
+                "name": "Cold_DrinkS",
+                "price": 25,
+                "quantity": 1,
+                "imgurl": "https://static.toiimg.com/thumb/57769686.cms?imgsize=346133&width=800&height=800"
+            },
+            {
+                "id": 6,
+                "name": "White_Sauce_Pasta",
+                "price": 50,
+                "quantity": 1,
+                "imgurl": "https://www.sinceindependence.com/wp-content/uploads/2020/04/white-sauce-pasta.jpg"
+            },
+            {
+                "id": 7,
+                "name": "Chicken_Burger",
+                "price": 60,
+                "quantity": 1,
+                "imgurl": "https://www.chicken.ca/wp-content/uploads/2020/09/Moist-Chicken-Burgers.jpg"
+            },
+            {
+                "id": 8,
+                "name": "Chicken_Sandwich",
+                "price": 40,
+                "quantity": 1,
+                "imgurl": "https://img-global.cpcdn.com/recipes/100eb9862119c32b/1200x630cq70/photo.jpg"
+            },
+            {
+                "id": 9,
+                "name": "Chicken_Pasta",
+                "price": 40,
+                "quantity": 1,
+                "imgurl": "https://i.ytimg.com/vi/o0UY2OL2ntE/maxresdefault.jpg"
+            }
+        ];
+        var cart = [];
+        for (x in data) {
+
+            var card = `
+        <div class="col-lg-3 col-md-4 col-xl-3 col-sm-6 mb-5" id="card">
+            <div class="card shadow p-3 mb-5 bg-white rounded" style="width: 17rem;" >
+                <img src="${data[x].imgurl}" class="card-img-top shadow p-1" alt="..." height="200" width="300" padding="25rem" onclick=go(${x})>
+                <div class="card-body">
+                    <h5 class="card-title">${data[x].name}</h5>
+                        <p class="card-text">Price: Rs.${data[x].price}</p>
+                        <div>
+                        <span><button type="button" id="a-t-c" href="#" class="btn btn-primary" onclick="select(this)" data-item="${data[x].name}">Add to Cart</button></span>
+                        <button type="button" id="details" href="#" class="btn btn-primary" data-item="${data[x].name}" onclick=go(${x})>DETAILS</button>
+                        </div>
+                </div>
+            </div>
+        </div>`;
+            //var nm=data[x].name
+            $('#items').append(card)
+        }
+
+
+        function select(nm) {
+            console.log(nm)
+            //var index = data.findIndex(nm);
+            var index = data.findIndex(obj => obj.name === nm.dataset.item);
+            console.log(index)
+
+            cart.push(data[index])
+            sessionStorage.setItem("cart", JSON.stringify(cart));
+            /*for(x in cart){
+                if(cart[x].name==data[index].name)
+                    cart[x].quantity+=1
+            }*/
+            console.log(cart);
+
+
+        }
+
+        function searhbox() {
+
+            var se = document.getElementById('sear').value;
+            var card = ''
+            for (x in data) {
+
+                if (data[x].name.toLowerCase().includes(se.toLowerCase())) {
+                    card += `
+        <div class="col-lg-3 col-md-4 col-xl-3 col-sm-6 mb-5">
+            <div class="card shadow p-p mb-5 bg-white rounded" style="width: 17rem;" >
+                <img src="${data[x].imgurl}" class="card-img-top shadow p-1" alt="..." height="200" width="300" padding="25rem" onclick=go(${x})>
+                <div class="card-body">
+                    <h5 class="card-title">${data[x].name}</h5>
+                        <p class="card-text">Price: Rs.${data[x].price}</p>
+                        <div>
+            <button type="button" id="a-t-c" href="#" class="btn btn-primary" onclick="select(this)" data-item="${data[x].name}">Add to Cart</button>
+            <button type="button" id="details" href="#" class="btn btn-primary" data-item="${data[x].name}" onclick=go(${x})>DETAILS</button>
+            </div>
+                </div>
+            </div>
+        </div>`;
+                    console.log(se)
+                    //document.getElementById("items").style.display = "none"
+
+
+                    $('#items').html(card)
+
+                }
+
+
+            }
+        }
+        function searh() {
+
+            var se = document.getElementById('sear').value;
+            var card = ''
+            for (x in data) {
+
+                if (data[x].name.toLowerCase().includes(se.toLowerCase())) {
+                    card += `
+                    <div class="col-lg-3 col-md-4 col-xl-3 col-sm-6 mb-5">
+                        <div class="card shadow p-p mb-5 bg-white rounded" style="width: 17rem;" >
+                            <img src="${data[x].imgurl}" class="card-img-top shadow p-1" alt="..." height="200" width="300" padding="25rem" onclick=go(${x})>
+                            <div class="card-body">
+                                <h5 class="card-title">${data[x].name}</h5>
+                                    <p class="card-text">Price: Rs.${data[x].price}</p>
+                                    <div>
+                        <button type="button" id="a-t-c" href="#" class="btn btn-primary" onclick="select(this)" data-item="${data[x].name}">Add to Cart</button>
+                        <button type="button" id="details" href="#" class="btn btn-primary" data-item="${data[x].name}" onclick=go(${x})>DETAILS</button>
+                        </div>
+                            </div>
+                        </div>
+                    </div>`;
+                    console.log(se)
+                    //document.getElementById("items").style.display = "none"
+
+
+                    $('#items').html(card)
+
+                }
+
+
+            }
+
+            if (se.length == 0) {
+
+                alert("Search Box Empty");
+
+            }
+
+        }
+        function go(g) {
+
+            var p = data[g]
+
+            // (A) VARIABLES TO PASS
+            var second = p
+
+            localStorage.setItem("second", JSON.stringify(second));
+            // (B) URL PARAMETERS
+            //var params = new URLSearchParams();
+            //params.append("first", first);
+            //params.append(p, JSON.stringify(second));
+            //console.log(params)
+            // (C) GO!
+            var url = "item_detail.html"
+            location.href = url;
+            window.open(url);
+        }
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
